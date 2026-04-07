@@ -14,3 +14,8 @@ select id, name, score from student;
 select id, name, score from student where id = 1;
 
 insert into student (name, score) VALUE (?, ?);
+
+
+SELECT * FROM student WHERE (:name IS NULL OR name LIKE concat('%', :name, '%'))
+                 AND (:fromScore IS NULL OR score >= :fromScore)
+                      AND (:toScore IS NULL OR score <= :toScore )

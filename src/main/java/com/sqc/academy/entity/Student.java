@@ -1,9 +1,8 @@
 package com.sqc.academy.entity;
 
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import javax.persistence.*;
 
 @Getter
 @Setter

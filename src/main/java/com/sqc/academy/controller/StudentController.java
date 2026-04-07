@@ -1,9 +1,9 @@
 package com.sqc.academy.controller;
 
 import com.sqc.academy.dto.ApiResponse;
+import com.sqc.academy.entity.Student;
 import com.sqc.academy.exception.AppException;
 import com.sqc.academy.exception.ErrorCode;
-import com.sqc.academy.entity.Student;
 import com.sqc.academy.service.IStudentService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -24,23 +24,19 @@ public class StudentController {
     //Get list (Search)
     // @RequestMapping(value = "/students", method = RequestMethod.GET)
     @GetMapping
-    public List<Student> getStudents() {
-        return studentService.findAll();
+    public List<Student> getStudents(String name, Double fromScore, Double toScore) { // Tìm theo tên
+        return studentService.findByAttr(name, fromScore, toScore);
     }
 
     // Get by id
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<Student>> getById(@PathVariable Integer id) {
-        Student student = studentService.findById(id);
+        Student student = studentService.findById(id).orElseThrow(() -> new AppException(ErrorCode.TEACHER_NOT_FOUNT));
 
-        if (student != null) {
-            return ResponseEntity.status(HttpStatus.OK).body(
-                    ApiResponse.<Student>builder()
-                            .data(student)
-                            .build());
-        }
-
-        throw new AppException(ErrorCode.TEACHER_NOT_FOUNT);
+        return ResponseEntity.status(HttpStatus.OK).body(
+                ApiResponse.<Student>builder()
+                        .data(student)
+                        .build());
     }
 
     @PostMapping

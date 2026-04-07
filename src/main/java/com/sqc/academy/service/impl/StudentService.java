@@ -9,6 +9,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -20,7 +21,12 @@ public class StudentService implements IStudentService {
         return studentRepository.findAll();
     }
 
-    public Student findById(Integer id) {
+    @Override
+    public List<Student> findByAttr(String name, Double fromScore, Double toScore) {
+        return studentRepository.findByAttr(name, fromScore, toScore);
+    }
+
+    public Optional<Student> findById(Integer id) {
         return studentRepository.findById(id);
     }
 
