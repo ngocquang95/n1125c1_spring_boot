@@ -1,8 +1,7 @@
 package com.sqc.academy.service.impl;
 
-import com.sqc.academy.model.Student;
+import com.sqc.academy.entity.Student;
 import com.sqc.academy.repository.IStudentRepository;
-import com.sqc.academy.repository.impl.StudentRepository;
 import com.sqc.academy.service.IStudentService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

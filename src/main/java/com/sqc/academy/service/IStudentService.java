@@ -1,6 +1,6 @@
 package com.sqc.academy.service;
 
-import com.sqc.academy.model.Student;
+import com.sqc.academy.entity.Student;
 
 import java.util.List;
 

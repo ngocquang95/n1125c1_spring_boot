@@ -3,7 +3,7 @@ package com.sqc.academy.controller;
 import com.sqc.academy.dto.ApiResponse;
 import com.sqc.academy.exception.AppException;
 import com.sqc.academy.exception.ErrorCode;
-import com.sqc.academy.model.Student;
+import com.sqc.academy.entity.Student;
 import com.sqc.academy.service.IStudentService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

@@ -1,43 +1,47 @@
 package com.sqc.academy.repository.impl;
 
-import com.sqc.academy.model.Student;
+import com.sqc.academy.entity.Student;
 import com.sqc.academy.repository.IStudentRepository;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Repository
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class StudentRepository implements IStudentRepository {
-    List<Student> students = new ArrayList<>(
-            Arrays.asList(
-                    new Student(1, "Lương", 2.0),
-                    new Student(2, "Thiên", 2.5),
-                    new Student(3, "Luân", 2.3)
-            )
-    );
-
     public List<Student> findAll() {
+        Session session = ConnectionUtil.sessionFactory.openSession();
+        List<Student> students = session.createQuery("FROM Student").getResultList(); // HQL
+        session.close();
         return students;
     }
 
     public Student findById(Integer id) {
-        for (Student student : students) {
-            if (student.getId() == id) {
-                return student;
-            }
-        }
+        Session session = ConnectionUtil.sessionFactory.openSession();
 
-        return null;
+        Student student = (Student) session.createQuery("FROM Student WHERE id = :id")
+                .setParameter("id", id)
+                .uniqueResult(); // HQL
+
+        session.close();
+
+        return student;
     }
 
     public Student save(Student student) {
-        student.setId((int) (Math.random() * 100000000));
-        students.add(student);
+        Session session = ConnectionUtil.sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.saveOrUpdate(student);
+        /*
+        id tồn tại: Update
+        id k tồn tại: Create
+         */
+        transaction.commit();
+        session.close();
 
         return student;
     }
