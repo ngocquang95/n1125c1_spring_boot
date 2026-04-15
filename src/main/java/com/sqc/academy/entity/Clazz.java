@@ -1,11 +1,12 @@
 package com.sqc.academy.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,4 +20,8 @@ public class Clazz {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
     String name;
+
+    @OneToMany(mappedBy = "clazz")
+    @JsonIgnoreProperties("clazz")
+    List<Student> students;
 }

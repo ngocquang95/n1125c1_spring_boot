@@ -1,7 +1,5 @@
 package com.sqc.academy.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -13,13 +11,15 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-public class Student {
+public class StudentProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
-    String name;
-    double score;
-    @ManyToOne
-    @JsonIgnoreProperties("students")
-    Clazz clazz; // khoa ngoai
+    @Column(unique = true)
+    String email;
+    @Column(unique = true)
+    String phone;
+
+    @OneToOne
+    Student student;
 }

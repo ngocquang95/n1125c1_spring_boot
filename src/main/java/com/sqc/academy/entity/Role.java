@@ -1,25 +1,25 @@
 package com.sqc.academy.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Entity
-public class Student {
+public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    Long id;
+
     String name;
-    double score;
-    @ManyToOne
-    @JsonIgnoreProperties("students")
-    Clazz clazz; // khoa ngoai
+
+    @ManyToMany(mappedBy = "roles") // Bên này sẽ không tạo cột mà chỉ ánh xạ theo bảng trung gian
+    Set<User> users = new HashSet<>();
 }
